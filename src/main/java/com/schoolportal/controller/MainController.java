@@ -25,6 +25,6 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // Trả về trang login của bạn
+        return "login"; // Trả về trang login
     }
 }

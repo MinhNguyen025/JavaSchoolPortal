@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="sidebar">
+    <div th:switch="${role}">
+        <!-- Sidebar for Admin -->
+        <div th:case="'ROLE_ADMIN'">
+            <ul>
+                <li><a href="/admin/timetable">Lịch thời khóa biểu</a></li>
+                <li><a href="/admin/add-post">Thêm bài viết mới</a></li>
+                <li><a href="/admin/add-teacher">Thêm giáo viên</a></li>
+            </ul>
+        </div>
+
+        <!-- Sidebar for Teacher -->
+        <div th:case="'ROLE_TEACHER'">
+            <ul>
+                <li><a href="/teacher/classes">Danh sách lớp học</a></li>
+                <li><a href="/teacher/assignments">Nhiệm vụ của tôi</a></li>
+            </ul>
+        </div>
+
+        <!-- Sidebar for Student -->
+        <div th:case="'ROLE_STUDENT'">
+            <ul>
+                <li><a href="/student/assignments">Nhiệm vụ của tôi</a></li>
+                <li><a href="/student/grades">Điểm số của tôi</a></li>
+            </ul>
+        </div>
+
+        <!-- Sidebar for Parent -->
+        <div th:case="'ROLE_PARENT'">
+            <ul>
+                <li><a href="/parent/children">Thông tin con cái</a></li>
+                <li><a href="/parent/meetings">Cuộc họp với giáo viên</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>School Portal</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<header>
+    <h1>School Portal</h1>
+    <nav>
+        <a href="/default">Home</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<div class="container">
+    <aside>
+        <!-- Sidebar will be injected here -->
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+    </aside>
+    <main>
+        <!-- Page content will be injected here -->
+        <div th:fragment="content"></div>
+    </main>
+</div>
+<footer>
+    <p>&copy; 2024 School Portal</p>
+</footer>
+</body>
+</html>

@@ -28,21 +28,23 @@ public class SecurityConfig {
                                 .requestMatchers("/teacher/**").hasRole("TEACHER")
                                 .requestMatchers("/student/**").hasRole("STUDENT")
                                 .requestMatchers("/parent/**").hasRole("PARENT")
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated() // Bảo mật tất cả các yêu cầu còn lại
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login")
-                                .permitAll()
-                                .defaultSuccessUrl("/default", true)
+                                .loginPage("/login") // Đặt trang đăng nhập
+                                .permitAll() // Cho phép tất cả truy cập trang đăng nhập
+                                .defaultSuccessUrl("/default", true) // Chuyển hướng sau khi đăng nhập thành công
                 )
                 .logout(logout ->
-                        logout.permitAll()
+                        logout
+                                .permitAll() // Cho phép tất cả truy cập để đăng xuất
                 )
                 .userDetailsService(userDetailsService);
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
