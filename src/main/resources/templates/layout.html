@@ -17,16 +17,20 @@
     <h1>School Portal</h1>
     <nav>
         <a href="/default">Home</a>
-        <a href="#">Logout</a>
+        <li>
+            <a href="/user/change-password">Đổi mật khẩu</a>
+        </li>
+        <a href="#" id="logout-link">Logout</a>
     </nav>
 </header>
 <div class="container">
     <aside>
-        <!-- Sidebar will be injected here -->
-        <div th:replace="fragments/sidebar :: sidebar"></div>
+        <!-- Sidebar sẽ được chèn vào đây -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
     </aside>
     <main>
-        <!-- Page content will be injected here -->
+        <!-- Nội dung trang sẽ được chèn vào đây -->
         <div th:fragment="content"></div>
         <form id="logout-form" action="/logout" method="POST" style="display: none;">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

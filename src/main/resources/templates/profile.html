@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<h1>Profile</h1>
+<p th:if="${param.passwordChanged}">Password changed successfully!</p>
+<a href="/user/change-password">Change Password</a>
+<!-- Thông tin profile khác -->
+</body>
+</html>

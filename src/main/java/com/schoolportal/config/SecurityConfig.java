@@ -36,10 +36,23 @@ public class SecurityConfig {
                                 .permitAll() // Cho phép tất cả truy cập trang đăng nhập
                                 .defaultSuccessUrl("/default", true) // Chuyển hướng sau khi đăng nhập thành công
                 )
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/logout") // Đường dẫn yêu cầu logout
+                                .logoutSuccessUrl("/login?logout") // Chuyển hướng sau khi đăng xuất thành công
+                                .permitAll() // Cho phép tất cả truy cập logout
+                )
+                .csrf(csrf ->
+                        csrf
+                                .ignoringRequestMatchers("/logout") // Cấu hình bỏ qua CSRF cho đường dẫn logout
+                )
                 .userDetailsService(userDetailsService);
 
         return http.build();
     }
+
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

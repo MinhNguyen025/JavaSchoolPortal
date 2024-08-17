@@ -27,4 +27,9 @@ public class MainController {
     public String login() {
         return "login"; // Trả về trang login
     }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile"; // Trang profile nơi có thể liên kết đến trang đổi mật khẩu
+    }
 }
