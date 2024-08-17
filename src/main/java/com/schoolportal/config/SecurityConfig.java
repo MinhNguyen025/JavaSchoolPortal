@@ -36,15 +36,10 @@ public class SecurityConfig {
                                 .permitAll() // Cho phép tất cả truy cập trang đăng nhập
                                 .defaultSuccessUrl("/default", true) // Chuyển hướng sau khi đăng nhập thành công
                 )
-                .logout(logout ->
-                        logout
-                                .permitAll() // Cho phép tất cả truy cập để đăng xuất
-                )
                 .userDetailsService(userDetailsService);
 
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

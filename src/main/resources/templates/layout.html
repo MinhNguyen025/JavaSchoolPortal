@@ -3,13 +3,21 @@
 <head>
     <title>School Portal</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('logout-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('logout-form').submit();
+            });
+        });
+    </script>
 </head>
 <body>
 <header>
     <h1>School Portal</h1>
     <nav>
         <a href="/default">Home</a>
-        <a href="/logout">Logout</a>
+        <a href="#">Logout</a>
     </nav>
 </header>
 <div class="container">
@@ -20,6 +28,9 @@
     <main>
         <!-- Page content will be injected here -->
         <div th:fragment="content"></div>
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
     </main>
 </div>
 <footer>
