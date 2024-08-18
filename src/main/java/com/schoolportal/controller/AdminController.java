@@ -1,11 +1,11 @@
 package com.schoolportal.controller;
 
+import com.schoolportal.model.Parent;
 import com.schoolportal.model.Role;
+import com.schoolportal.model.Student;
 import com.schoolportal.model.Teacher;
 import com.schoolportal.model.User;
-import com.schoolportal.repository.RoleRepository;
-import com.schoolportal.repository.TeacherRepository;
-import com.schoolportal.repository.UserRepository;
+import com.schoolportal.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +31,12 @@ public class AdminController {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private ParentRepository parentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -102,5 +110,104 @@ public class AdminController {
         teacherRepository.deleteById(id);
         return "redirect:/admin/teachers";
     }
+
+    // Thêm chức năng quản lý Student
+    @GetMapping("/students")
+    public String listStudents(Model model) {
+        model.addAttribute("students", studentRepository.findAll());
+        return "admin/students"; // Đây là file students.html
+    }
+
+    @GetMapping("/students/create")
+    public String showCreateStudentForm(Model model) {
+        model.addAttribute("student", new Student());
+        model.addAttribute("parents", parentRepository.findAll()); // Cung cấp danh sách phụ huynh cho form
+        return "admin/create-student"; // Đây là file create-student.html
+    }
+
+    @PostMapping("/students/create")
+    public String createStudent(@ModelAttribute("student") Student student) {
+        studentRepository.save(student);
+        return "redirect:/admin/students";
+    }
+
+    @GetMapping("/students/edit/{id}")
+    public String showEditStudentForm(@PathVariable("id") Long id, Model model) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
+        model.addAttribute("student", student);
+        model.addAttribute("parents", parentRepository.findAll()); // Cung cấp danh sách phụ huynh cho form
+        return "admin/edit-student"; // Đây là file edit-student.html
+    }
+
+    @PostMapping("/students/edit/{id}")
+    public String updateStudent(@PathVariable("id") Long id, @ModelAttribute("student") Student student) {
+        student.setId(id);
+        studentRepository.save(student);
+        return "redirect:/admin/students";
+    }
+
+    @GetMapping("/students/delete/{id}")
+    public String deleteStudent(@PathVariable Long id) {
+        studentRepository.deleteById(id);
+        return "redirect:/admin/students";
+    }
+
+    // Thêm chức năng quản lý Parent
+    @GetMapping("/parents")
+    public String listParents(Model model) {
+        model.addAttribute("parents", parentRepository.findAll());
+        return "admin/parents"; // Đây là file parents.html
+    }
+
+    @GetMapping("/parents/create")
+    public String showCreateParentForm(Model model) {
+        model.addAttribute("parent", new Parent());
+        return "admin/create-parent"; // Đây là file create-parent.html
+    }
+
+    @PostMapping("/parents/create")
+    public String createParent(@ModelAttribute("parent") Parent parent) {
+        parentRepository.save(parent);
+        return "redirect:/admin/parents";
+    }
+
+    @GetMapping("/parents/edit/{id}")
+    public String showEditParentForm(@PathVariable("id") Long id, Model model) {
+        Parent parent = parentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + id));
+        model.addAttribute("parent", parent);
+        return "admin/edit-parent"; // Đây là file edit-parent.html
+    }
+
+    @PostMapping("/parents/edit/{id}")
+    public String updateParent(@PathVariable("id") Long id, @ModelAttribute("parent") Parent parent) {
+        parent.setId(id);
+        parentRepository.save(parent);
+        return "redirect:/admin/parents";
+    }
+
+    @GetMapping("/parents/delete/{id}")
+    public String deleteParent(@PathVariable Long id) {
+        parentRepository.deleteById(id);
+        return "redirect:/admin/parents";
+    }
+
+    @GetMapping("/parents/{id}/students")
+    public String listStudentsByParent(@PathVariable("id") Long parentId, Model model) {
+        Parent parent = parentRepository.findById(parentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
+        List<Student> students = studentRepository.findByParent(parent);
+
+        // Định dạng ngày tháng
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        students = students.stream()
+                .peek(student -> student.setFormattedDateOfBirth(student.getDateOfBirth().format(formatter)))
+                .collect(Collectors.toList());
+
+        model.addAttribute("parent", parent);
+        model.addAttribute("students", students);
+        return "admin/students-by-parent";
+    }
+
+
 
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Parent</title>
+</head>
+<body>
+<h1>Edit Parent</h1>
+<form th:action="@{/admin/parents/edit/{id}(id=${parent.id})}" th:object="${parent}" method="post">
+    <label>First Name:</label>
+    <input type="text" th:field="*{firstName}" /><br/>
+    <label>Last Name:</label>
+    <input type="text" th:field="*{lastName}" /><br/>
+    <label>Email:</label>
+    <input type="text" th:field="*{email}" /><br/>
+    <label>Date of Birth:</label>
+    <input type="date" th:field="*{dateOfBirth}" /><br/>
+    <button type="submit">Save</button>
+</form>
+<a href="/admin/parents">Back to List</a>
+</body>
+</html>

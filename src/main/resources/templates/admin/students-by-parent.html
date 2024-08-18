@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Students of Parent</title>
+</head>
+<body>
+<h1>Students of Parent: <span th:text="${parent.firstName} + ' ' + ${parent.lastName}"></span></h1>
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Student ID</th>
+        <th>Date of Birth</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td th:text="${student.email}"></td>
+        <td th:text="${student.studentId}"></td>
+        <!-- Hiển thị ngày tháng sinh đã định dạng -->
+        <td th:text="${student.formattedDateOfBirth}"></td>
+    </tr>
+    </tbody>
+</table>
+<a href="#" th:href="@{/admin/parents}">Back to Parents</a>
+</body>
+</html>

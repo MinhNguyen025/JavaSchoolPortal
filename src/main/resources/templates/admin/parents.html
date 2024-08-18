@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Parents Management</title>
+</head>
+<body>
+<h1>Parents Management</h1>
+<a href="/admin/parents/create">Add New Parent</a>
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="parent : ${parents}">
+        <td th:text="${parent.firstName}"></td>
+        <td th:text="${parent.lastName}"></td>
+        <td th:text="${parent.email}"></td>
+        <td th:text="${parent.dateOfBirth}"></td>
+        <td>
+            <a th:href="@{/admin/parents/edit/{id}(id=${parent.id})}">Edit</a> |
+            <a th:href="@{/admin/parents/delete/{id}(id=${parent.id})}">Delete</a> |
+            <a th:href="@{/admin/parents/{id}/students(id=${parent.id})}">View Students</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

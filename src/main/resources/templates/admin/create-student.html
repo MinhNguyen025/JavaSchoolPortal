@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Student</title>
+</head>
+<body>
+<h1>Create Student</h1>
+<form action="#" th:action="@{/admin/students/create}" th:object="${student}" method="post">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" th:field="*{firstName}" /><br/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" th:field="*{lastName}" /><br/>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" /><br/>
+
+    <label for="studentId">Student ID:</label>
+    <input type="text" id="studentId" th:field="*{studentId}" /><br/>
+
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" /><br/>
+
+    <label for="parent">Parent:</label>
+    <select id="parent" name="parent.id">
+        <option value="" th:text="'Select Parent'" selected></option>
+        <option th:each="parent : ${parents}" th:value="${parent.id}" th:text="${parent.firstName + ' ' + parent.lastName}"></option>
+    </select><br/>
+
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>
