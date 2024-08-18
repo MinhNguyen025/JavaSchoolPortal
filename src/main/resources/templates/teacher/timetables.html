@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Thời khóa biểu của bạn</h1>
+<table>
+    <tr>
+        <th>Lớp học</th>
+        <th>Ngày</th>
+        <th>Thời gian</th>
+    </tr>
+    <tr th:each="timetable : ${timetables}">
+        <td th:text="${timetable.schoolClass.className}"></td>
+        <td th:text="${timetable.date}"></td>
+        <td th:text="${timetable.timeslot}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

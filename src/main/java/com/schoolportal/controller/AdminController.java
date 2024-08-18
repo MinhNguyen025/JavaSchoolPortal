@@ -180,10 +180,31 @@ public class AdminController {
 
     @PostMapping("/parents/edit/{id}")
     public String updateParent(@PathVariable("id") Long id, @ModelAttribute("parent") Parent parent) {
-        parent.setId(id);
-        parentRepository.save(parent);
+        Parent existingParent = parentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + id));
+
+        // Cập nhật thông tin cơ bản
+        existingParent.setFirstName(parent.getFirstName());
+        existingParent.setLastName(parent.getLastName());
+        existingParent.setEmail(parent.getEmail());
+        existingParent.setDateOfBirth(parent.getDateOfBirth());
+
+        // Xử lý danh sách students
+        if (parent.getStudents() == null) {
+            parent.setStudents(new HashSet<>());
+        }
+
+        // Xóa tất cả học sinh hiện tại
+        existingParent.getStudents().clear();
+
+        // Thêm học sinh mới từ form
+        existingParent.getStudents().addAll(parent.getStudents());
+
+        // Lưu thay đổi
+        parentRepository.save(existingParent);
         return "redirect:/admin/parents";
     }
+
 
     @GetMapping("/parents/delete/{id}")
     public String deleteParent(@PathVariable Long id) {

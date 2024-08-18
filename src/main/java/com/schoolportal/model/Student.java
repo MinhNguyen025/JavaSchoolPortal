@@ -19,9 +19,14 @@ public class Student {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private String formattedDateOfBirth;
+
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
+
+    @ManyToOne
+    @JoinColumn(name = "school_class_id") // Đảm bảo tên cột trùng với tên cột trong bảng
+    private SchoolClass schoolClass;
 
     // Getters and setters
 
@@ -87,5 +92,13 @@ public class Student {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
 }

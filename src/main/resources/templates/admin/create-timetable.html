@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo Thời Khóa Biểu Mới</title>
+</head>
+<body>
+<h1>Tạo thời khóa biểu mới</h1>
+<form th:action="@{/admin/timetables/create}" th:object="${timetable}" method="post">
+    <label>Tiêu đề:</label>
+    <input type="text" th:field="*{title}" />
+
+    <label>Lớp học:</label>
+    <select th:field="*{schoolClass.id}">
+        <option th:each="schoolClass : ${classes}" th:value="${schoolClass.id}" th:text="${schoolClass.className}"></option>
+    </select>
+
+    <label>Giáo viên:</label>
+    <select th:field="*{teacher.id}">
+        <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"></option>
+    </select>
+
+    <h3>Thêm các khung giờ:</h3>
+    <div th:each="timeslot, iterStat : ${timetable.timeslots}">
+        <label>Ngày bắt đầu:</label>
+        <input type="datetime-local" th:field="*{timeslots[__${iterStat.index}__].startTime}" />
+        <label>Ngày kết thúc:</label>
+        <input type="datetime-local" th:field="*{timeslots[__${iterStat.index}__].endTime}" />
+    </div>
+
+    <button type="submit">Lưu</button>
+</form>
+<a href="/admin/timetables">Trở về danh sách</a>
+</body>
+</html>

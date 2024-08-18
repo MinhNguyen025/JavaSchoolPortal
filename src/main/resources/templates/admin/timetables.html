@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- admin/timetables.html -->
+<h1>Danh sách thời khóa biểu</h1>
+<table>
+  <tr>
+    <th>Lớp học</th>
+    <th>Giáo viên</th>
+    <th>Ngày</th>
+    <th>Thời gian</th>
+    <th>Hành động</th>
+  </tr>
+  <tr th:each="timetable : ${timetables}">
+    <td th:text="${timetable.schoolClass.className}"></td>
+    <td th:text="${timetable.teacher.firstName} + ' ' + ${timetable.teacher.lastName}"></td>
+    <td th:text="${timetable.date}"></td>
+    <td th:text="${timetable.timeslot}"></td>
+    <td>
+      <a th:href="@{/admin/timetables/edit/{id}(id=${timetable.id})}">Sửa</a>
+      <a th:href="@{/admin/timetables/delete/{id}(id=${timetable.id})}">Xóa</a>
+    </td>
+  </tr>
+</table>
+<a href="/admin/timetables/create">Thêm thời khóa biểu mới</a>
+
+</body>
+</html>

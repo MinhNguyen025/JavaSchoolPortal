@@ -1,9 +1,8 @@
 package com.schoolportal.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Teacher {
@@ -15,6 +14,17 @@ public class Teacher {
     private String lastName;
     private String email;
     private String subject;
+
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_classes",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "school_class_id")
+    )
+    private List<SchoolClass> classes;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Timetable> timetables; // Liên kết tới Thời Khóa Biểu
 
     // Getters and Setters
 
@@ -56,5 +66,21 @@ public class Teacher {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public List<SchoolClass> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<SchoolClass> classes) {
+        this.classes = classes;
+    }
+
+    public List<Timetable> getTimetables() {
+        return timetables;
+    }
+
+    public void setTimetables(List<Timetable> timetables) {
+        this.timetables = timetables;
     }
 }
