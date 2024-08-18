@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teachers Management</title>
+</head>
+<body>
+<h1>Teachers Management</h1>
+<a href="/admin/teachers/create">Add New Teacher</a>
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher : ${teachers}">
+        <td th:text="${teacher.firstName}"></td>
+        <td th:text="${teacher.lastName}"></td>
+        <td th:text="${teacher.email}"></td>
+        <td th:text="${teacher.subject}"></td>
+        <td>
+            <a th:href="@{/admin/teachers/edit/{id}(id=${teacher.id})}">Edit</a> |
+            <a th:href="@{/admin/teachers/delete/{id}(id=${teacher.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Teacher</title>
+</head>
+<body>
+<h1>Create New Teacher</h1>
+<form th:action="@{/admin/teachers/create}" th:object="${teacher}" method="post">
+    <div>
+        <label>First Name</label>
+        <input type="text" th:field="*{firstName}" required/>
+    </div>
+    <div>
+        <label>Last Name</label>
+        <input type="text" th:field="*{lastName}" required/>
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required/>
+    </div>
+    <div>
+        <label>Subject</label>
+        <input type="text" th:field="*{subject}" required/>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+</body>
+</html>
