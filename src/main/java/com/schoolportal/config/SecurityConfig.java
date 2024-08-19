@@ -28,6 +28,7 @@ public class SecurityConfig {
                                 .requestMatchers("/teacher/**").hasRole("TEACHER")
                                 .requestMatchers("/student/**").hasRole("STUDENT")
                                 .requestMatchers("/parent/**").hasRole("PARENT")
+                                .requestMatchers("/subject/**").hasRole("ADMIN") // Thêm đường dẫn cho môn học
                                 .anyRequest().authenticated() // Bảo mật tất cả các yêu cầu còn lại
                 )
                 .formLogin(formLogin ->

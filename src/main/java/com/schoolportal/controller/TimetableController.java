@@ -34,7 +34,6 @@ public class TimetableController {
     @GetMapping("/create")
     public String showCreateTimetableForm(Model model) {
         Timetable timetable = new Timetable();
-        timetable.setTimeslots(new ArrayList<>()); // Khởi tạo danh sách khung giờ
         model.addAttribute("timetable", timetable);
         model.addAttribute("classes", classRepository.findAll());
         model.addAttribute("teachers", teacherRepository.findAll());

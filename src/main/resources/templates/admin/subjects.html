@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subjects</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Nếu có -->
+</head>
+<body>
+<h1>Subjects</h1>
+<a href="/admin/subjects/create">Create New Subject</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject : ${subjects}">
+        <td th:text="${subject.id}"></td>
+        <td th:text="${subject.name}"></td>
+        <td>
+            <a th:href="@{/admin/subjects/edit/{id}(id=${subject.id})}">Edit</a>
+            <a th:href="@{/admin/subjects/delete/{id}(id=${subject.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

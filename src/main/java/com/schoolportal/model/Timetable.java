@@ -12,9 +12,6 @@ public class Timetable {
 
     private String title; // Tiêu đề thời khóa biểu (ví dụ: "Thời khóa biểu tuần 1")
 
-    @OneToMany(mappedBy = "timetable", cascade = CascadeType.ALL)
-    private List<Timeslot> timeslots; // Danh sách các khung giờ trong thời khóa biểu
-
     @ManyToOne
     @JoinColumn(name = "school_class_id")
     private SchoolClass schoolClass; // Lớp học của thời khóa biểu
@@ -39,14 +36,6 @@ public class Timetable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<Timeslot> getTimeslots() {
-        return timeslots;
-    }
-
-    public void setTimeslots(List<Timeslot> timeslots) {
-        this.timeslots = timeslots;
     }
 
     public SchoolClass getSchoolClass() {

@@ -25,7 +25,7 @@ public class Student {
     private Parent parent;
 
     @ManyToOne
-    @JoinColumn(name = "school_class_id") // Đảm bảo tên cột trùng với tên cột trong bảng
+    @JoinColumn(name = "school_class_id")
     private SchoolClass schoolClass;
 
     // Getters and setters

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Lesson</title>
+</head>
+<body>
+<h1>Edit Lesson</h1>
+<form action="#" th:action="@{/admin/lessons/update}" th:object="${lesson}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/>
+
+    <label for="subject">Subject:</label>
+    <select id="subject" th:field="*{subject}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"
+                th:selected="${subject.id == lesson.subject.id}"></option>
+    </select>
+
+    <label for="startTime">Start Time:</label>
+    <input type="time" id="startTime" th:field="*{startTime}" required/>
+
+    <label for="endTime">End Time:</label>
+    <input type="time" id="endTime" th:field="*{endTime}" required/>
+
+    <button type="submit">Update</button>
+</form>
+<a href="/admin/lessons">Back to List</a>
+</body>
+</html>

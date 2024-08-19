@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Subject</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Nếu có -->
+</head>
+<body>
+<h1>Create Subject</h1>
+<form action="#" th:action="@{/admin/subjects}" th:object="${subject}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/>
+
+    <button type="submit">Save</button>
+</form>
+<a href="/admin/subjects">Back to List</a>
+</body>
+</html>
