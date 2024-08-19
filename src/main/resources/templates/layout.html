@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>School Portal</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <title th:text="${title}">School Portal</title>
+    <link rel="stylesheet" href="/css/style.css" />
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('logout-link').addEventListener('click', (e) => {
@@ -26,8 +26,7 @@
 <div class="container">
     <aside>
         <!-- Sidebar sẽ được chèn vào đây -->
-        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-
+        <div th:replace="fragments/sidebar :: sidebar"></div>
     </aside>
     <main>
         <!-- Nội dung trang sẽ được chèn vào đây -->

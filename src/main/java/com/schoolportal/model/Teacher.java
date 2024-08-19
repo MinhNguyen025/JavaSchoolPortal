@@ -20,7 +20,6 @@ public class Teacher {
     private Set<Timetable> timetables;
 
     // Getters và Setters
-
     public Long getId() {
         return id;
     }

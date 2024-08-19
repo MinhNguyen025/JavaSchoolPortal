@@ -70,7 +70,7 @@ public class AdminController {
     public String adminIndex(Model model, Authentication authentication) {
         model.addAttribute("role", "ROLE_ADMIN");
         model.addAttribute("content", "admin/index :: adminContent");
-        return "layout";
+        return "admin/index";
     }
 
     @GetMapping("/teachers")

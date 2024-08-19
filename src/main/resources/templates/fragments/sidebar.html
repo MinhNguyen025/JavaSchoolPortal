@@ -6,6 +6,7 @@
         <!-- Sidebar for Admin -->
         <div th:case="'ROLE_ADMIN'">
             <ul>
+                <li><a href="/admin/index">Trang chính Admin</a></li>
                 <li><a href="/admin/timetable">Lịch thời khóa biểu</a></li>
                 <li><a href="/admin/add-post">Thêm bài viết mới</a></li>
                 <li><a href="/admin/add-teacher">Thêm giáo viên</a></li>
@@ -15,6 +16,7 @@
         <!-- Sidebar for Teacher -->
         <div th:case="'ROLE_TEACHER'">
             <ul>
+                <li><a href="/teacher/index">Trang chính Giáo viên</a></li>
                 <li><a href="/teacher/classes">Danh sách lớp học</a></li>
                 <li><a href="/teacher/assignments">Nhiệm vụ của tôi</a></li>
             </ul>
@@ -23,6 +25,7 @@
         <!-- Sidebar for Student -->
         <div th:case="'ROLE_STUDENT'">
             <ul>
+                <li><a href="/student/index">Trang chính Học sinh</a></li>
                 <li><a href="/student/assignments">Nhiệm vụ của tôi</a></li>
                 <li><a href="/student/grades">Điểm số của tôi</a></li>
             </ul>
@@ -31,6 +34,7 @@
         <!-- Sidebar for Parent -->
         <div th:case="'ROLE_PARENT'">
             <ul>
+                <li><a href="/parent/index">Trang chính Phụ huynh</a></li>
                 <li><a href="/parent/children">Thông tin con cái</a></li>
                 <li><a href="/parent/meetings">Cuộc họp với giáo viên</a></li>
             </ul>
