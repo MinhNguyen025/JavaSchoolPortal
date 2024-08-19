@@ -2,32 +2,19 @@ package com.schoolportal.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Set;
-
 @Entity
 public class SchoolClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String className;
+    private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "class_teacher",
-            joinColumns = @JoinColumn(name = "school_class_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id")
-    )
-    private List<Teacher> teachers;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
-    @OneToMany(mappedBy = "schoolClass")
-    private List<Student> students;
-
-    @OneToMany(mappedBy = "schoolClass")
-    private List<Timetable> timetables;
-
-    // Getters và Setters
+    // Các thuộc tính khác và các phương thức getter và setter
 
     public Long getId() {
         return id;
@@ -37,35 +24,19 @@ public class SchoolClass {
         this.id = id;
     }
 
-    public String getClassName() {
-        return className;
+    public String getName() {
+        return name;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Teacher> getTeachers() {
-        return teachers;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Timetable> getTimetables() {
-        return timetables;
-    }
-
-    public void setTimetables(List<Timetable> timetables) {
-        this.timetables = timetables;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

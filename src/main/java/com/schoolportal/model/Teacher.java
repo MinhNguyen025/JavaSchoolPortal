@@ -1,8 +1,7 @@
 package com.schoolportal.model;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Teacher {
@@ -13,20 +12,14 @@ public class Teacher {
     private String firstName;
     private String lastName;
     private String email;
-    private String subject;
-
-    @ManyToMany
-    @JoinTable(
-            name = "teacher_classes",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "school_class_id")
-    )
-    private List<SchoolClass> classes;
 
     @OneToMany(mappedBy = "teacher")
-    private List<Timetable> timetables; // Liên kết tới Thời Khóa Biểu
+    private Set<SchoolClass> classes;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "teacher")
+    private Set<Timetable> timetables;
+
+    // Getters và Setters
 
     public Long getId() {
         return id;
@@ -60,27 +53,19 @@ public class Teacher {
         this.email = email;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public List<SchoolClass> getClasses() {
+    public Set<SchoolClass> getClasses() {
         return classes;
     }
 
-    public void setClasses(List<SchoolClass> classes) {
+    public void setClasses(Set<SchoolClass> classes) {
         this.classes = classes;
     }
 
-    public List<Timetable> getTimetables() {
+    public Set<Timetable> getTimetables() {
         return timetables;
     }
 
-    public void setTimetables(List<Timetable> timetables) {
+    public void setTimetables(Set<Timetable> timetables) {
         this.timetables = timetables;
     }
 }

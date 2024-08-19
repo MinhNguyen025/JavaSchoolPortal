@@ -1,3 +1,4 @@
+<!-- src/main/resources/templates/admin/create-parent.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -6,16 +7,25 @@
 <body>
 <h1>Create Parent</h1>
 <form th:action="@{/admin/parents/create}" th:object="${parent}" method="post">
-    <label>First Name:</label>
-    <input type="text" th:field="*{firstName}" /><br/>
-    <label>Last Name:</label>
-    <input type="text" th:field="*{lastName}" /><br/>
-    <label>Email:</label>
-    <input type="text" th:field="*{email}" /><br/>
-    <label>Date of Birth:</label>
-    <input type="date" th:field="*{dateOfBirth}" /><br/>
-    <button type="submit">Save</button>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" th:field="*{firstName}" />
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" th:field="*{lastName}" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" />
+
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" />
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
+
+    <button type="submit">Create Parent</button>
 </form>
-<a href="/admin/parents">Back to List</a>
 </body>
 </html>

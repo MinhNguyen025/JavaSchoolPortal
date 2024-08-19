@@ -35,7 +35,7 @@ public class SecurityConfig {
                         formLogin
                                 .loginPage("/login") // Đặt trang đăng nhập
                                 .permitAll() // Cho phép tất cả truy cập trang đăng nhập
-                                .defaultSuccessUrl("/default", true) // Chuyển hướng sau khi đăng nhập thành công
+                                .defaultSuccessUrl("/default", true)
                 )
                 .logout(logout ->
                         logout
@@ -51,9 +51,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

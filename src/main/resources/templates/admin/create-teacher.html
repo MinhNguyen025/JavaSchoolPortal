@@ -4,27 +4,24 @@
     <title>Create Teacher</title>
 </head>
 <body>
-<h1>Create New Teacher</h1>
+<h1>Create Teacher</h1>
 <form th:action="@{/admin/teachers/create}" th:object="${teacher}" method="post">
-    <div>
-        <label>First Name</label>
-        <input type="text" th:field="*{firstName}" required/>
-    </div>
-    <div>
-        <label>Last Name</label>
-        <input type="text" th:field="*{lastName}" required/>
-    </div>
-    <div>
-        <label>Email</label>
-        <input type="email" th:field="*{email}" required/>
-    </div>
-    <div>
-        <label>Subject</label>
-        <input type="text" th:field="*{subject}" required/>
-    </div>
-    <div>
-        <button type="submit">Save</button>
-    </div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" th:field="*{firstName}" required/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" th:field="*{lastName}" required/>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" required/>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required/>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required/>
+
+    <button type="submit">Create Teacher</button>
 </form>
 </body>
 </html>

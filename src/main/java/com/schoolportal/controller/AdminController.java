@@ -80,14 +80,34 @@ public class AdminController {
     }
 
     @GetMapping("/teachers/create")
-    public String showCreateTeacherForm(Model model) {
+    public String createTeacherForm(Model model) {
         model.addAttribute("teacher", new Teacher());
-        return "admin/create-teacher"; // Đây là file create-teacher.html
+        return "admin/create-teacher";
     }
 
     @PostMapping("/teachers/create")
-    public String createTeacher(@ModelAttribute("teacher") Teacher teacher) {
+    public String createTeacher(@ModelAttribute("teacher") Teacher teacher,
+                                @RequestParam("username") String username,
+                                @RequestParam("password") String password) {
+        // Lưu giáo viên vào cơ sở dữ liệu
         teacherRepository.save(teacher);
+
+        // Tạo tài khoản người dùng với quyền TEACHER
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+
+        // Tạo quyền TEACHER
+        Role teacherRole = roleRepository.findByName("ROLE_TEACHER");
+        if (teacherRole == null) {
+            teacherRole = new Role();
+            teacherRole.setName("ROLE_TEACHER");
+            roleRepository.save(teacherRole);
+        }
+
+        user.setRoles(Set.of(teacherRole));
+        userRepository.save(user);
+
         return "redirect:/admin/teachers";
     }
 
@@ -95,7 +115,7 @@ public class AdminController {
     public String showEditTeacherForm(@PathVariable("id") Long id, Model model) {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid teacher Id:" + id));
         model.addAttribute("teacher", teacher);
-        return "admin/edit-teacher"; // Đây là file edit-teacher.html
+        return "admin/edit-teacher";
     }
 
     @PostMapping("/teachers/edit/{id}")
@@ -126,10 +146,34 @@ public class AdminController {
     }
 
     @PostMapping("/students/create")
-    public String createStudent(@ModelAttribute("student") Student student) {
+    public String createStudent(
+            @ModelAttribute("student") Student student,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
+
+        // Lưu học sinh vào cơ sở dữ liệu
         studentRepository.save(student);
+
+        // Tạo tài khoản người dùng với quyền STUDENT
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+
+        // Tạo quyền STUDENT
+        Role studentRole = roleRepository.findByName("ROLE_STUDENT");
+        if (studentRole == null) {
+            // Nếu chưa có quyền STUDENT, tạo mới
+            studentRole = new Role();
+            studentRole.setName("ROLE_STUDENT");
+            roleRepository.save(studentRole);
+        }
+
+        user.setRoles(Set.of(studentRole));
+        userRepository.save(user);
+
         return "redirect:/admin/students";
     }
+
 
     @GetMapping("/students/edit/{id}")
     public String showEditStudentForm(@PathVariable("id") Long id, Model model) {
@@ -166,8 +210,31 @@ public class AdminController {
     }
 
     @PostMapping("/parents/create")
-    public String createParent(@ModelAttribute("parent") Parent parent) {
+    public String createParent(
+            @ModelAttribute("parent") Parent parent,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
+
+        // Lưu phụ huynh vào cơ sở dữ liệu
         parentRepository.save(parent);
+
+        // Tạo tài khoản người dùng với quyền PARENT
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+
+        // Tạo quyền PARENT
+        Role parentRole = roleRepository.findByName("ROLE_PARENT");
+        if (parentRole == null) {
+            // Nếu chưa có quyền PARENT, tạo mới
+            parentRole = new Role();
+            parentRole.setName("ROLE_PARENT");
+            roleRepository.save(parentRole);
+        }
+
+        user.setRoles(Set.of(parentRole));
+        userRepository.save(user);
+
         return "redirect:/admin/parents";
     }
 
