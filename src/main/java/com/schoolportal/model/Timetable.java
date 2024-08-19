@@ -1,7 +1,7 @@
 package com.schoolportal.model;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -10,18 +10,21 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title; // Tiêu đề thời khóa biểu (ví dụ: "Thời khóa biểu tuần 1")
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "school_class_id")
-    private SchoolClass schoolClass; // Lớp học của thời khóa biểu
+    private SchoolClass schoolClass;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    // Getters và Setters
+    @OneToMany(mappedBy = "timetable")
+    private List<Lesson> lessons;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -30,12 +33,20 @@ public class Timetable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public SchoolClass getSchoolClass() {
@@ -52,5 +63,13 @@ public class Timetable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }
