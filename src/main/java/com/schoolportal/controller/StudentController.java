@@ -21,7 +21,7 @@ public class StudentController {
     public String studentIndex(Model model, Authentication authentication) {
         model.addAttribute("role", "ROLE_STUDENT");
         model.addAttribute("content", "student/index :: studentContent");
-        return "layout";
+        return "/student/index";
     }
 
     @Autowired
