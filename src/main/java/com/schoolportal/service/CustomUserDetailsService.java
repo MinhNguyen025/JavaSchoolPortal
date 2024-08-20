@@ -2,6 +2,7 @@ package com.schoolportal.service;
 
 import com.schoolportal.model.User;
 import com.schoolportal.repository.UserRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
