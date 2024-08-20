@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>School Portal Wonder  - The Evolution of School</title>
+  <title>Admin Dashboard - School Portal Wonder</title>
   <link rel="icon" type="image/x-icon" href="/templates/assets/favicon.ico" />
   <!-- Font Awesome icons (free version)-->
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -17,15 +16,32 @@
   <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top">
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('logout-link').addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent the default anchor behavior
+      document.getElementById('logout-form').submit(); // Submit the logout form
+    });
+  });
+</script>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container px-5">
-    <a class="navbar-brand" href="#page-top">School Portal </a>
+    <a class="navbar-brand" href="#page-top">Admin Dashboard</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#!">Sign Up</a></li>
-        <li class="nav-item"><a class="nav-link" href="#!">Log In</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/manage-users">Manage Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/manage-classes">Manage Classes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/reports">View Reports</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="logout-link">Log Out</a>
+          <!-- Hidden logout form -->
+          <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <!-- Add any necessary CSRF token here -->
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+          </form>
+        </li>
       </ul>
     </div>
   </div>
@@ -34,9 +50,9 @@
 <header class="masthead text-center text-white">
   <div class="masthead-content">
     <div class="container px-5">
-      <h1 class="masthead-heading mb-0">School Portal Wonder </h1>
-      <h2 class="masthead-subheading mb-0"> The Evolution of School</h2>
-      <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Learn More</a>
+      <h1 class="masthead-heading mb-0">Welcome to the Admin Dashboard</h1>
+      <h2 class="masthead-subheading mb-0">Manage School Portal Effectively</h2>
+      <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Get Started</a>
     </div>
   </div>
   <div class="bg-circle-1 bg-circle"></div>
@@ -53,8 +69,8 @@
       </div>
       <div class="col-lg-6 order-lg-1">
         <div class="p-5">
-          <h2 class="display-4">User-Friendly Interface </h2>
-          <p>Simple and Intuitive Interface Design: Easy to navigate for all users, including students, teachers, and parents. Display the timetable and class schedule clearly.</p>
+          <h2 class="display-4">User Management</h2>
+          <p>Efficiently manage users, including adding, editing, or removing user accounts. Monitor user activities and ensure security.</p>
         </div>
       </div>
     </div>
@@ -69,8 +85,8 @@
       </div>
       <div class="col-lg-6">
         <div class="p-5">
-          <h2 class="display-4">We got you!</h2>
-          <p> Provide the ability to view and track scores as well as academic progress reports. Update and manage personal information, academic achievements and attendance.</p>
+          <h2 class="display-4">Class Management</h2>
+          <p>Oversee class schedules, enrollments, and performance. Keep track of academic progress for all classes.</p>
         </div>
       </div>
     </div>
@@ -85,8 +101,8 @@
       </div>
       <div class="col-lg-6 order-lg-1">
         <div class="p-5">
-          <h2 class="display-4">Announcement Tools</h2>
-          <p>Update school announcements and news. Send important notifications to users via email or text message. Provide answers to frequently asked questions to support users.</p>
+          <h2 class="display-4">Reporting Tools</h2>
+          <p>Access and generate reports on academic performance, attendance, and other key metrics for informed decision-making.</p>
         </div>
       </div>
     </div>

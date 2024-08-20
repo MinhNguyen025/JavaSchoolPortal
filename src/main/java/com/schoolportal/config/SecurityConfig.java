@@ -28,32 +28,32 @@ public class SecurityConfig {
                                 .requestMatchers("/teacher/**").hasRole("TEACHER")
                                 .requestMatchers("/student/**").hasRole("STUDENT")
                                 .requestMatchers("/parent/**").hasRole("PARENT")
-                                .requestMatchers("/subject/**").hasRole("ADMIN") // Thêm đường dẫn cho môn học
-                                .anyRequest().authenticated() // Bảo mật tất cả các yêu cầu còn lại
+                                .requestMatchers("/", "/index", "/login", "/css/**", "/js/**").permitAll() // Permit access to these paths
+                                .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login") // Đặt trang đăng nhập
-                                .permitAll() // Cho phép tất cả truy cập trang đăng nhập
-                                .defaultSuccessUrl("/default", true)
+                                .loginPage("/login") // Set the login page
+                                .permitAll() // Allow all to access the login page
+                                .defaultSuccessUrl("/default", true) // Redirect to default URL after login
                 )
                 .logout(logout ->
                         logout
-                                .logoutUrl("/logout") // Đường dẫn yêu cầu logout
-                                .logoutSuccessUrl("/login?logout") // Chuyển hướng sau khi đăng xuất thành công
-                                .permitAll() // Cho phép tất cả truy cập logout
+                                .logoutUrl("/logout") // Logout request URL
+                                .logoutSuccessUrl("/login?logout") // Redirect after successful logout
+                                .permitAll() // Allow all to access logout
                 )
                 .csrf(csrf ->
                         csrf
-                                .ignoringRequestMatchers("/logout") // Cấu hình bỏ qua CSRF cho đường dẫn logout
+                                .ignoringRequestMatchers("/logout") // Ignore CSRF for logout URL
                 )
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService); // Set the user details service
 
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Use BCrypt for password encoding
     }
 }

@@ -2,7 +2,6 @@ package com.schoolportal.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +20,11 @@ public class MainController {
             return "redirect:/parent/index";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "index"; // Trả về trang index
     }
 
     @GetMapping("/login")
