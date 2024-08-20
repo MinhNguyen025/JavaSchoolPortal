@@ -2,6 +2,7 @@ package com.schoolportal.controller;
 
 import com.schoolportal.model.User;
 import com.schoolportal.repository.UserRepository;
+import com.schoolportal.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService; // Inject the service
 
     @GetMapping("/change-password")
     public String showChangePasswordForm(Model model) {
@@ -57,5 +61,31 @@ public class UserController {
         userRepository.save(user);
 
         return "redirect:/profile?passwordChanged";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register"; // Return the registration view name
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@RequestParam("username") String username,
+                               @RequestParam("password") String password,
+                               Model model) {
+
+        // Check if the username is already taken
+        if (customUserDetailsService.isUsernameTaken(username)) {
+            model.addAttribute("error", "Username is already taken!");
+            return "register"; // Return to the registration view with error
+        }
+
+        // Create and save new user
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password)); // Encode the password
+        userRepository.save(newUser);
+
+        return "redirect:/login?registrationSuccess"; // Redirect after successful registration
     }
 }

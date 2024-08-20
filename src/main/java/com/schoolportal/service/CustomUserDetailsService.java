@@ -33,4 +33,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
+
+    // Method to check if the username is already taken
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

@@ -625,7 +625,7 @@ progress {
 }
 
 .blockquote-footer {
-    margin-top: -1rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
     font-size: 0.875em;
     color: #6c757d;
@@ -7640,7 +7640,7 @@ textarea.form-control-lg {
 }
 
 .mt-3 {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
 }
 
 .mt-4 {
@@ -7684,7 +7684,7 @@ textarea.form-control-lg {
 }
 
 .mb-0 {
-    margin-bottom: 0 !important;
+    margin-top: 100px !important;
 }
 
 .mb-1 {
@@ -7789,6 +7789,7 @@ textarea.form-control-lg {
 }
 
 .px-5 {
+    padding-top: 10px !important;
     padding-right: 3rem !important;
     padding-left: 3rem !important;
 }
@@ -8202,6 +8203,9 @@ textarea.form-control-lg {
 }
 
 .bg-black {
+    padding-top: 100px !important;
+
+
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-black-rgb), var(--bs-bg-opacity)) !important;
 }
