@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Thêm lớp học mới</title>
+</head>
+<body>
+<h2>Thêm lớp học mới</h2>
+
+<form th:action="@{/admin/schoolclasses/add}" th:object="${schoolClass}" method="post">
+  Tên lớp: <input type="text" th:field="*{name}" /><br/>
+  <!-- Không có trường chọn giáo viên -->
+  <button type="submit">Lưu</button>
+</form>
+
+<a th:href="@{/admin/schoolclasses/list}">Quay lại danh sách lớp học</a>
+
+</body>
+</html>

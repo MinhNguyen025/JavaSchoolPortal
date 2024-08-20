@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <tr th:each="timetable : ${timetables}">
-        <td th:text="${timetable.timeSlot.timeSlot  }"></td>
+        <td th:text="${timetable.timeSlot.timeSlot }"></td>
         <td th:text="${timetable.day}"></td>
         <td th:text="${timetable.subject.name}"></td>
         <td th:text="${timetable.teacher.firstName + ' ' + timetable.teacher.lastName}"></td>

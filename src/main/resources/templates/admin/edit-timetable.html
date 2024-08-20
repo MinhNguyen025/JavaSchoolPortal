@@ -9,18 +9,20 @@
     <input type="hidden" th:field="*{id}"/>
 
     <label for="day">Day</label>
-    <input type="text" id="day" name="day" th:value="*{day}" required />
+    <input type="text" id="day" th:field="*{day}" required />
 
     <label for="timeSlot">Time Slot</label>
-    <input type="text" id="timeSlot" name="timeSlot" th:value="*{timeSlot}" required />
+    <select id="timeSlot" th:field="*{timeSlot}" required>
+        <option th:each="slot : ${timeSlots}" th:value="${slot.id}" th:text="${slot.timeSlot}"></option>
+    </select>
 
     <label for="subject">Subject</label>
-    <select id="subject" name="subject" th:field="*{subject}" required>
+    <select id="subject" th:field="*{subject}" required>
         <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
     </select>
 
     <label for="teacher">Teacher</label>
-    <select id="teacher" name="teacher" th:field="*{teacher}" required>
+    <select id="teacher" th:field="*{teacher}" required>
         <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName + ' ' + teacher.lastName}"></option>
     </select>
 

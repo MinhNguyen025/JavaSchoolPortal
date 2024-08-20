@@ -17,6 +17,10 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
+    }
+
     public Teacher getTeacherById(Long id) {
         return teacherRepository.findById(id).orElse(null);
     }

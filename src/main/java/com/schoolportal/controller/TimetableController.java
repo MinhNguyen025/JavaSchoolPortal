@@ -69,7 +69,16 @@ public class TimetableController {
 
     @PostMapping("/update")
     public String updateTimetable(@ModelAttribute Timetable timetable) {
-        timetableService.addTimetable(timetable);
+        Timetable existingTimetable = timetableService.getTimetableById(timetable.getId());
+        if (existingTimetable != null) {
+            existingTimetable.setDay(timetable.getDay());
+            existingTimetable.setTimeSlot(timetable.getTimeSlot());
+            existingTimetable.setSubject(timetable.getSubject());
+            existingTimetable.setTeacher(timetable.getTeacher());
+            existingTimetable.setSchoolClass(timetable.getSchoolClass());
+            timetableService.addTimetable(existingTimetable);
+        }
         return "redirect:/admin/timetable/list";
     }
+
 }

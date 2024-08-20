@@ -67,4 +67,5 @@ public class Teacher {
     public void setTimetables(Set<Timetable> timetables) {
         this.timetables = timetables;
     }
+
 }

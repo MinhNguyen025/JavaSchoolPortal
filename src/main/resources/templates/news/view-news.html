@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View News</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<h1 th:text="${news.title}">News Title</h1>
+<p th:text="${news.content}">News content goes here...</p>
+<td th:text="${#temporals.format(news.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+<a th:href="@{/news/list}">Back to List</a>
+</body>
+</html>
