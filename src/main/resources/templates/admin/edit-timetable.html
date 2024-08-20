@@ -1,85 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Sửa Thời Khóa Biểu</title>
+    <title>Edit Timetable</title>
 </head>
 <body>
-<h1>Sửa thời khóa biểu</h1>
-<form th:action="@{/admin/timetables/edit/{id}(id=${timetable.id})}" th:object="${timetable}" method="post">
-    <label>Lớp học:</label>
-    <select th:field="*{schoolClass.id}">
-        <option th:each="schoolClass : ${classes}" th:value="${schoolClass.id}" th:text="${schoolClass.className}"></option>
-    </select>
-    <label>Giáo viên:</label>
-    <select th:field="*{teacher.id}">
-        <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"></option>
-    </select>
-    <label>Tiêu đề:</label>
-    <input type="text" th:field="*{title}" />
+<h2>Edit Timetable</h2>
+<form action="#" th:action="@{/admin/timetable/update}" th:object="${timetable}" method="post">
+    <input type="hidden" th:field="*{id}"/>
 
-    <div id="timeslotsContainer">
-        <!-- Khung giờ sẽ được thêm vào đây -->
-        <div th:each="timeslot, iterStat : ${timetable.timeslots}">
-            <div class="timeslot">
-                <input type="hidden" th:field="*{timeslots[__${iterStat.index}__].id}" />
-                <label>Thời gian bắt đầu:</label>
-                <input type="text" th:field="*{timeslots[__${iterStat.index}__].startTime}" />
-                <label>Thời gian kết thúc:</label>
-                <input type="text" th:field="*{timeslots[__${iterStat.index}__].endTime}" />
-                <button type="button" onclick="removeTimeslot(${iterStat.index})">Xóa</button>
-            </div>
-        </div>
-    </div>
+    <label for="day">Day</label>
+    <input type="text" id="day" th:field="*{day}" required />
 
-    <button type="button" onclick="addTimeslot()">Thêm khung giờ</button>
-    <button type="submit">Lưu</button>
+    <label for="timeSlot">Time Slot</label>
+    <select id="timeSlot" th:field="*{timeSlot}" required>
+        <option th:each="slot : ${timeSlots}" th:value="${slot.id}" th:text="${slot.timeSlot}"></option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <select id="subject" th:field="*{subject}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+    </select>
+
+    <label for="teacher">Teacher</label>
+    <select id="teacher" th:field="*{teacher}" required>
+        <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName + ' ' + teacher.lastName}"></option>
+    </select>
+
+    <button type="submit">Update Timetable</button>
 </form>
-<a href="/admin/timetables">Trở về danh sách</a>
-
-<script>
-    let timeslotIndex = document.querySelectorAll('#timeslotsContainer .timeslot').length; // Đếm số lượng khung giờ hiện tại
-
-    function addTimeslot() {
-        // Tạo phần tử khung giờ mới
-        const timeslotDiv = document.createElement('div');
-        timeslotDiv.className = 'timeslot';
-        timeslotDiv.innerHTML = `
-        <input type="hidden" name="timeslots[${timeslotIndex}].id" />
-        <label>Thời gian bắt đầu:</label>
-        <input type="text" name="timeslots[${timeslotIndex}].startTime" />
-        <label>Thời gian kết thúc:</label>
-        <input type="text" name="timeslots[${timeslotIndex}].endTime" />
-        <button type="button" onclick="removeTimeslot(${timeslotIndex})">Xóa</button>
-    `;
-
-        // Thêm khung giờ mới vào container
-        document.getElementById('timeslotsContainer').appendChild(timeslotDiv);
-
-        timeslotIndex++; // Tăng chỉ mục cho khung giờ mới
-    }
-
-    function removeTimeslot(index) {
-        // Xóa khung giờ tại chỉ mục được chỉ định
-        const timeslotElements = document.querySelectorAll('#timeslotsContainer .timeslot');
-        if (timeslotElements.length > 0) {
-            const timeslotToRemove = timeslotElements[index];
-            if (timeslotToRemove) {
-                timeslotToRemove.remove();
-
-                // Cập nhật chỉ mục cho các khung giờ còn lại
-                document.querySelectorAll('#timeslotsContainer .timeslot').forEach((element, idx) => {
-                    element.querySelectorAll('input').forEach(input => {
-                        const name = input.name;
-                        input.name = name.replace(/\[\d+\]/, `[${idx}]`);
-                    });
-                    element.querySelector('button').setAttribute('onclick', `removeTimeslot(${idx})`);
-                });
-
-                timeslotIndex--; // Giảm chỉ mục tổng
-            }
-        }
-    }
-</script>
 </body>
 </html>

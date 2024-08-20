@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Danh sách lớp học</title>
+</head>
+<body>
+<h2>Danh sách lớp học</h2>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Tên lớp</th>
+    <th>Giáo viên</th>
+    <th>Actions</th>
+  </tr>
+  <tr th:each="schoolClass : ${schoolClasses}">
+    <td th:text="${schoolClass.id}"></td>
+    <td th:text="${schoolClass.name}"></td>
+    <td>
+      <a th:href="@{/admin/schoolclasses/edit/{id}(id=${schoolClass.id})}">Sửa</a> |
+      <a th:href="@{/admin/schoolclasses/delete/{id}(id=${schoolClass.id})}">Xóa</a>
+    </td>
+  </tr>
+</table>
+
+<a th:href="@{/admin/schoolclasses/add}">Thêm lớp học mới</a>
+
+</body>
+</html>

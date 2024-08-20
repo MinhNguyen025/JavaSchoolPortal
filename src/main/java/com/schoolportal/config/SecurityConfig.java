@@ -28,8 +28,12 @@ public class SecurityConfig {
                                 .requestMatchers("/teacher/**").hasRole("TEACHER")
                                 .requestMatchers("/student/**").hasRole("STUDENT")
                                 .requestMatchers("/parent/**").hasRole("PARENT")
-                                .requestMatchers("/", "/index", "/login", "/css/**", "/js/**").permitAll() // Permit access to these paths
-                                .anyRequest().authenticated()
+                                // Chỉ cho phép admin thực hiện các hành động CRUD với bài viết
+                                .requestMatchers("/news/create", "/news/edit/**", "/news/delete/**").hasRole("ADMIN")
+                                // Các quyền khác chỉ có thể xem bài viết
+                                .requestMatchers("/news/view/**").authenticated()
+                                .requestMatchers("/subject/**").permitAll()
+                                .anyRequest().authenticated() // Bảo mật tất cả các yêu cầu còn lại
                 )
                 .formLogin(formLogin ->
                         formLogin

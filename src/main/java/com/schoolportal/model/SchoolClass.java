@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class SchoolClass {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,7 +15,7 @@ public class SchoolClass {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    // Các thuộc tính khác và các phương thức getter và setter
+    // Getters và Setters
 
     public Long getId() {
         return id;

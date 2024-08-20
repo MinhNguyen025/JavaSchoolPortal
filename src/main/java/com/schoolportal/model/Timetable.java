@@ -1,30 +1,40 @@
 package com.schoolportal.model;
-
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Timetable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String day;
+    @ManyToOne
+    @JoinColumn(name = "timeslot_id")
+    private TimeSlot timeSlot;
 
     @ManyToOne
-    @JoinColumn(name = "school_class_id")
-    private SchoolClass schoolClass;
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "timetable")
-    private List<Lesson> lessons;
+    @ManyToOne
+    @JoinColumn(name = "school_class_id")
+    private SchoolClass schoolClass; // Ensure this field exists
+
 
     // Getters and Setters
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,28 +43,20 @@ public class Timetable {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public String getDay() {
+        return day;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public SchoolClass getSchoolClass() {
-        return schoolClass;
-    }
-
-    public void setSchoolClass(SchoolClass schoolClass) {
-        this.schoolClass = schoolClass;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Teacher getTeacher() {
@@ -65,11 +67,11 @@ public class Timetable {
         this.teacher = teacher;
     }
 
-    public List<Lesson> getLessons() {
-        return lessons;
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
 }

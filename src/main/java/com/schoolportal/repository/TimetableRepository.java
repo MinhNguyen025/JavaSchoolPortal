@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TimetableRepository extends JpaRepository<Timetable, Long> {
-    List<Timetable> findBySchoolClass(SchoolClass schoolClass);
+    List<Timetable> findByDay(String day);
     List<Timetable> findByTeacher(Teacher teacher);
+    List<Timetable> findBySchoolClass(SchoolClass schoolClass);
 }

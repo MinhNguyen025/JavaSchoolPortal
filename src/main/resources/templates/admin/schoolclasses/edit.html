@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sửa lớp học</title>
+</head>
+<body>
+<h2>Sửa lớp học</h2>
+
+<form th:action="@{/admin/schoolclasses/edit/{id}(id=${schoolClass.id})}" th:object="${schoolClass}" method="post">
+    Tên lớp: <input type="text" th:field="*{name}" /><br/>
+    <button type="submit">Lưu</button>
+</form>
+
+<a th:href="@{/admin/schoolclasses/list}">Quay lại danh sách lớp học</a>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Timetable</title>
+</head>
+<body>
+<h2>Add Timetable</h2>
+<form action="#" th:action="@{/admin/timetable/add}" th:object="${timetable}" method="post">
+    <label for="day">Day</label>
+    <select id="day" name="day" th:field="*{day}" required>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+    </select>
+
+    <label for="timeSlot">Time Slot</label>
+    <select id="timeSlot" name="timeSlot" th:field="*{timeSlot}" required>
+        <option th:each="timeSlot : ${timeSlots}" th:value="${timeSlot.id}" th:text="${timeSlot.timeSlot}"></option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <select id="subject" name="subject" th:field="*{subject}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+    </select>
+
+    <label for="teacher">Teacher</label>
+    <select id="teacher" name="teacher" th:field="*{teacher}" required>
+        <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName + ' ' + teacher.lastName}"></option>
+    </select>
+
+    <button type="submit">Add Timetable</button>
+</form>
+</body>
+</html>
