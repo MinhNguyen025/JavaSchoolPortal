@@ -1,7 +1,7 @@
 package com.schoolportal.controller;
 
 import com.schoolportal.model.Parent;
-import com.schoolportal.model.Role;
+import com.schoolportal.model.RoleName; // Import the RoleName enum
 import com.schoolportal.model.Student;
 import com.schoolportal.model.Teacher;
 import com.schoolportal.model.User;
@@ -27,9 +27,6 @@ public class AdminController {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private TeacherRepository teacherRepository;
 
     @Autowired
@@ -44,25 +41,19 @@ public class AdminController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", roleRepository.findAll());
+        // No longer need roles from repository
         return "admin/register";
     }
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-        // Mã hóa mật khẩu
+        // Encode the password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Lấy role từ form
-        Set<Role> roles = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            Role userRole = roleRepository.findByName(role.getName());
-            roles.add(userRole);
-        }
+        // Set the role directly
+        user.setRole(RoleName.valueOf(user.getRole().name())); // Assuming the role is set in the form
 
-        user.setRoles(roles);
         userRepository.save(user);
-
         return "redirect:/admin/index";
     }
 
@@ -89,23 +80,16 @@ public class AdminController {
     public String createTeacher(@ModelAttribute("teacher") Teacher teacher,
                                 @RequestParam("username") String username,
                                 @RequestParam("password") String password) {
-        // Lưu giáo viên vào cơ sở dữ liệu
+        // Save teacher to the database
         teacherRepository.save(teacher);
 
-        // Tạo tài khoản người dùng với quyền TEACHER
+        // Create user account with TEACHER role
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
 
-        // Tạo quyền TEACHER
-        Role teacherRole = roleRepository.findByName("ROLE_TEACHER");
-        if (teacherRole == null) {
-            teacherRole = new Role();
-            teacherRole.setName("ROLE_TEACHER");
-            roleRepository.save(teacherRole);
-        }
-
-        user.setRoles(Set.of(teacherRole));
+        // Set role directly
+        user.setRole(RoleName.ROLE_TEACHER);
         userRepository.save(user);
 
         return "redirect:/admin/teachers";
@@ -131,18 +115,18 @@ public class AdminController {
         return "redirect:/admin/teachers";
     }
 
-    // Thêm chức năng quản lý Student
+    // Student Management
     @GetMapping("/students")
     public String listStudents(Model model) {
         model.addAttribute("students", studentRepository.findAll());
-        return "admin/students"; // Đây là file students.html
+        return "admin/students";
     }
 
     @GetMapping("/students/create")
     public String showCreateStudentForm(Model model) {
         model.addAttribute("student", new Student());
-        model.addAttribute("parents", parentRepository.findAll()); // Cung cấp danh sách phụ huynh cho form
-        return "admin/create-student"; // Đây là file create-student.html
+        model.addAttribute("parents", parentRepository.findAll());
+        return "admin/create-student";
     }
 
     @PostMapping("/students/create")
@@ -151,36 +135,27 @@ public class AdminController {
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
 
-        // Lưu học sinh vào cơ sở dữ liệu
+        // Save student to the database
         studentRepository.save(student);
 
-        // Tạo tài khoản người dùng với quyền STUDENT
+        // Create user account with STUDENT role
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
 
-        // Tạo quyền STUDENT
-        Role studentRole = roleRepository.findByName("ROLE_STUDENT");
-        if (studentRole == null) {
-            // Nếu chưa có quyền STUDENT, tạo mới
-            studentRole = new Role();
-            studentRole.setName("ROLE_STUDENT");
-            roleRepository.save(studentRole);
-        }
-
-        user.setRoles(Set.of(studentRole));
+        // Set role directly
+        user.setRole(RoleName.ROLE_STUDENT);
         userRepository.save(user);
 
         return "redirect:/admin/students";
     }
 
-
     @GetMapping("/students/edit/{id}")
     public String showEditStudentForm(@PathVariable("id") Long id, Model model) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
         model.addAttribute("student", student);
-        model.addAttribute("parents", parentRepository.findAll()); // Cung cấp danh sách phụ huynh cho form
-        return "admin/edit-student"; // Đây là file edit-student.html
+        model.addAttribute("parents", parentRepository.findAll());
+        return "admin/edit-student";
     }
 
     @PostMapping("/students/edit/{id}")
@@ -196,17 +171,17 @@ public class AdminController {
         return "redirect:/admin/students";
     }
 
-    // Thêm chức năng quản lý Parent
+    // Parent Management
     @GetMapping("/parents")
     public String listParents(Model model) {
         model.addAttribute("parents", parentRepository.findAll());
-        return "admin/parents"; // Đây là file parents.html
+        return "admin/parents";
     }
 
     @GetMapping("/parents/create")
     public String showCreateParentForm(Model model) {
         model.addAttribute("parent", new Parent());
-        return "admin/create-parent"; // Đây là file create-parent.html
+        return "admin/create-parent";
     }
 
     @PostMapping("/parents/create")
@@ -215,24 +190,16 @@ public class AdminController {
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
 
-        // Lưu phụ huynh vào cơ sở dữ liệu
+        // Save parent to the database
         parentRepository.save(parent);
 
-        // Tạo tài khoản người dùng với quyền PARENT
+        // Create user account with PARENT role
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
 
-        // Tạo quyền PARENT
-        Role parentRole = roleRepository.findByName("ROLE_PARENT");
-        if (parentRole == null) {
-            // Nếu chưa có quyền PARENT, tạo mới
-            parentRole = new Role();
-            parentRole.setName("ROLE_PARENT");
-            roleRepository.save(parentRole);
-        }
-
-        user.setRoles(Set.of(parentRole));
+        // Set role directly
+        user.setRole(RoleName.ROLE_PARENT);
         userRepository.save(user);
 
         return "redirect:/admin/parents";
@@ -242,7 +209,7 @@ public class AdminController {
     public String showEditParentForm(@PathVariable("id") Long id, Model model) {
         Parent parent = parentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + id));
         model.addAttribute("parent", parent);
-        return "admin/edit-parent"; // Đây là file edit-parent.html
+        return "admin/edit-parent";
     }
 
     @PostMapping("/parents/edit/{id}")
@@ -250,28 +217,27 @@ public class AdminController {
         Parent existingParent = parentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + id));
 
-        // Cập nhật thông tin cơ bản
+        // Update basic information
         existingParent.setFirstName(parent.getFirstName());
         existingParent.setLastName(parent.getLastName());
         existingParent.setEmail(parent.getEmail());
         existingParent.setDateOfBirth(parent.getDateOfBirth());
 
-        // Xử lý danh sách students
+        // Handle list of students
         if (parent.getStudents() == null) {
             parent.setStudents(new HashSet<>());
         }
 
-        // Xóa tất cả học sinh hiện tại
+        // Clear existing students
         existingParent.getStudents().clear();
 
-        // Thêm học sinh mới từ form
+        // Add new students from form
         existingParent.getStudents().addAll(parent.getStudents());
 
-        // Lưu thay đổi
+        // Save changes
         parentRepository.save(existingParent);
         return "redirect:/admin/parents";
     }
-
 
     @GetMapping("/parents/delete/{id}")
     public String deleteParent(@PathVariable Long id) {
@@ -285,7 +251,7 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
         List<Student> students = studentRepository.findByParent(parent);
 
-        // Định dạng ngày tháng
+        // Format date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         students = students.stream()
                 .peek(student -> student.setFormattedDateOfBirth(student.getDateOfBirth().format(formatter)))
@@ -295,7 +261,4 @@ public class AdminController {
         model.addAttribute("students", students);
         return "admin/students-by-parent";
     }
-
-
-
 }

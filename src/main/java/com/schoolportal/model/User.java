@@ -1,7 +1,6 @@
 package com.schoolportal.model;
 
 import jakarta.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
@@ -14,13 +13,8 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    @Enumerated(EnumType.STRING)
+    private RoleName role; // Use RoleName enum
 
     // Getters and setters
 
@@ -48,11 +42,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public RoleName getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(RoleName role) {
+        this.role = role;
     }
 }

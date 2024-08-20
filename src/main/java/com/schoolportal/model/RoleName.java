@@ -1,4 +1,4 @@
-package templates.admin;
+package com.schoolportal.model;
 
 public enum     RoleName {
     ROLE_ADMIN,
